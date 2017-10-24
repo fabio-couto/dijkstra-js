@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Algoritmo de Dijkstra</title>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="Dijkstra.js"></script>
+    <script type="text/javascript">
+
+        (function ($) {
+            //Função para criação do Grafo
+            var CriarGrafoA = function () {
+                var objGrafo = new Grafo();
+
+                objGrafo.AdicionarVertice("A");
+                objGrafo.AdicionarVertice("B");
+                objGrafo.AdicionarVertice("C");
+                objGrafo.AdicionarVertice("D");
+                objGrafo.AdicionarVertice("E");
+                objGrafo.AdicionarVertice("F");
+
+                objGrafo.AdicionarAresta("A", "B", 4);
+                objGrafo.AdicionarAresta("A", "C", 2);
+                objGrafo.AdicionarAresta("B", "C", 1);
+                objGrafo.AdicionarAresta("B", "D", 5);
+                objGrafo.AdicionarAresta("C", "D", 8);
+                objGrafo.AdicionarAresta("C", "E", 10);
+                objGrafo.AdicionarAresta("D", "E", 2);
+                objGrafo.AdicionarAresta("D", "F", 6);
+                objGrafo.AdicionarAresta("E", "F", 2);
+
+                return objGrafo;
+            };
+
+            //Função para criação do Grafo
+            var CriarGrafoB = function () {
+                var objGrafo = new Grafo();
+
+                objGrafo.AdicionarVertice("V1");
+                objGrafo.AdicionarVertice("V2");
+                objGrafo.AdicionarVertice("V3");
+                objGrafo.AdicionarVertice("V4");
+                objGrafo.AdicionarVertice("V5");
+                objGrafo.AdicionarVertice("V6");
+                objGrafo.AdicionarVertice("V7");
+                objGrafo.AdicionarVertice("V8");
+                objGrafo.AdicionarVertice("V9");
+
+                objGrafo.AdicionarAresta("V1", "V2", 4);
+                objGrafo.AdicionarAresta("V1", "V8", 9);
+                objGrafo.AdicionarAresta("V2", "V8", 11);
+                objGrafo.AdicionarAresta("V2", "V3", 9);
+                objGrafo.AdicionarAresta("V3", "V4", 7);
+                objGrafo.AdicionarAresta("V4", "V5", 10);
+                objGrafo.AdicionarAresta("V5", "V6", 11);
+                objGrafo.AdicionarAresta("V4", "V6", 15);
+                objGrafo.AdicionarAresta("V3", "V6", 4);
+                objGrafo.AdicionarAresta("V3", "V9", 2);
+                objGrafo.AdicionarAresta("V6", "V7", 2);
+                objGrafo.AdicionarAresta("V7", "V9", 6);
+                objGrafo.AdicionarAresta("V8", "V9", 7);
+                objGrafo.AdicionarAresta("V7", "V8", 1);
+
+                return objGrafo;
+            };
+
+            //Uso de jQuery apenas para adicionar os eventos na tela
+            $(document).ready(function () {
+                $("#btnCalcularA").click(function () {
+                    var objGrafo = CriarGrafoA();
+                    var vOrigem = $("#txtVerticeOrigemA").val();
+                    var vDestino = $("#txtVerticeDestinoA").val();
+
+                    var resultado = objGrafo.Dijkstra(vOrigem, vDestino);
+
+                    alert("O menor caminho entre os vértices " + vOrigem + " e " + vDestino + " é:\n\n\t" + resultado.CaminhoMaisCurto + "\n\nO custo total deste caminho é:\n\n\t" + resultado.CustoTotal);
+                });
+
+                $("#btnCalcularB").click(function () {
+                    var objGrafo = CriarGrafoB();
+                    var vOrigem = "V" + $("#txtVerticeOrigemB").val();
+                    var vDestino = "V" + $("#txtVerticeDestinoB").val();
+
+                    var resultado = objGrafo.Dijkstra(vOrigem, vDestino);
+
+                    alert("O menor caminho entre os vértices " + vOrigem + " e " + vDestino + " é:\n\n\t" + resultado.CaminhoMaisCurto + "\n\nO custo total deste caminho é:\n\n\t" + resultado.CustoTotal);
+                });
+            });
+        })(jQuery);
+
+    </script>
+</head>
+<body>
+    <table style="width: 90%; margin: 0px auto">
+        <tr>
+            <td>
+                <!-- Grafo A -->
+                <img src="images/graphA.jpg" alt="" />
+                <table style="background-color: #EEEEEE; margin: 0px auto;">
+                    <tr>
+                        <td>Vértice de Origem: </td>
+                        <td>
+                            <input type="text" maxlength="1" id="txtVerticeOrigemA" value="A" /></td>
+                    </tr>
+                    <tr>
+                        <td>Vértice de Destino: </td>
+                        <td>
+                            <input type="text" maxlength="1" id="txtVerticeDestinoA" value="F" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button id="btnCalcularA">Encontrar menor caminho</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <!-- Grafo B -->
+                <img src="images/graphB.jpg" alt="" />
+                <table style="background-color: #EEEEEE; margin: 0px auto;">
+                    <tr>
+                        <td>Vértice de Origem: </td>
+                        <td>
+                            <input type="text" maxlength="1" id="txtVerticeOrigemB" value="1" /></td>
+                    </tr>
+                    <tr>
+                        <td>Vértice de Destino: </td>
+                        <td>
+                            <input type="text" maxlength="1" id="txtVerticeDestinoB" value="5" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button id="btnCalcularB">Encontrar menor caminho</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
